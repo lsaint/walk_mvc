@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+		<title>广发卡名品半价购</title>
+		<link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+		<link rel="stylesheet" href="{% static "css/style.css" %}" />
+		<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+{# <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}"></script>#}
+        <script type="text/javascript" src="{% static "js/jquery.cookie.js" %}"></script>
+		<script>
+            function IsPC(){
+       var userAgentInfo = navigator.userAgent;
+       var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+       var flag = true;
+       for (var v = 0; v < Agents.length; v++) {
+           if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+       }
+       return flag;
+		}
+		if(IsPC()){
+			window.location.href="/pc";
+		}
+        else{
+            $("#indexpage").show();
+        }
+
+			</script>
+	</head>
+
+	<body>
+        <div class="overlay" >
+			<div id="indexpage">
+				<img style="width: 100%;height: 100%;" src="{% static "img/indexpage.jpg" %}" />
+				<ul>
+					<li id="linkSC"></li>
+					<li id="linkHT"></li>
+					<li id="linkJF"></li>
+				</ul>
+			</div>
+		</div>
+
+        <div style="display:none" >
+            <script src="http://s4.cnzz.com/z_stat.php?id=1256751266&web_id=1256751266" language="JavaScript"></script>
+        </div>
+    </body>
+<script>
+		$(function(){
+            var currentContent="";
+			$(".overlay li").click(function() {
+			    var id = $(this).attr("id");
+{#                 $.cookie(id, "true", {#}
+{#					expires: 365, //有效日期#}
+{#				});#}
+
+                switch (id){
+                case "linkSC":currentContent="shangcheng";break;
+                case "linkHT":currentContent="haitao";break;
+                case "linkJF":currentContent="jifen";break;
+            }
+                $.cookie("currentContent", currentContent, {
+					expires: 365, //有效日期
+				});
+                window.location.href="/m";
+
+		});
+	});
+</script>
+</html>

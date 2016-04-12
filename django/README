@@ -1,0 +1,16 @@
+
+
+
+import:
+    python manage.py importitems items_list.txt photo
+
+
+
+static:
+    python manage.py collectstatic
+
+
+
+start:
+    cd ../deploy/
+    sh start.sh

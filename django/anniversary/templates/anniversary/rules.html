@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+		<title>活动细则</title>
+		<link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+		<link rel="stylesheet" href="{% static "css/style.css" %}" />
+		<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+{#         <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}"></script>#}
+		<script type="text/javascript" src="{% static "js/jquery.touchSlider.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/jquery.lazyload.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.cookie.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/param.js" %}"></script>
+		<style>
+            body{
+                background: #FFFFFF;
+            }
+        </style>
+        <script>
+
+			$(document).ready(function() {
+
+                //控制要显示哪个活动细则
+                var rulesID=$.request.queryString["type"];
+                $("#"+rulesID).show();
+				//轮播器高度控制
+				$("#carousel").css("height", $(window).width() * 0.5053333333333333);
+				$("#carousel .flicking_con:first-child").css("top", $(window).width() * 0.5053333333333333 - 25);
+				//轮播器监听事件
+				$(".main_visual").hover(function() {
+					$("#btn_prev,#btn_next").fadeIn()
+				}, function() {
+					$("#btn_prev,#btn_next").fadeOut()
+				});
+				$dragBln = false;
+				$(".main_image").touchSlider({
+					flexible: true,
+					speed: 600,
+					btn_prev: $("#btn_prev"),
+					btn_next: $("#btn_next"),
+					paging: $(".flicking_con a"),
+					counter: function(e) {
+						$(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+					}
+				});
+				$(".main_image").bind("mousedown", function() {
+					$dragBln = false;
+				});
+				$(".main_image").bind("dragstart", function() {
+					$dragBln = true;
+				});
+				$(".main_image a").click(function() {
+					if ($dragBln) {
+						return false;
+					}
+				});
+				timer = setInterval(function() {
+					$("#btn_next").click();
+				}, 5000);
+				$(".main_visual").hover(function() {
+					clearInterval(timer);
+				}, function() {
+					timer = setInterval(function() {
+						$("#btn_next").click();
+					}, 5000);
+				});
+				$(".main_image").bind("touchstart", function() {
+					clearInterval(timer);
+				}).bind("touchend", function() {
+					timer = setInterval(function() {
+						$("#btn_next").click();
+					}, 5000);
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+    <!--banner条-->
+		<div class="banner">
+			<a href="/m">返回</a>
+			活动细则
+		</div>
+		<!--轮播器-->
+		<div id="carousel" class="main_visual">
+            <img style="width: 100%;"  src="{% static "img/img_main_1.jpg" %}"/>
+{#            			<a href="/rules" style="display: block;position: absolute;right: 10px;bottom: 10px;width:24%;height: 3.2rem;"></a>#}
+{#             请勿删除，目前轮播器只有一张图片，暂时不需要用到#}
+{#			<div class="flicking_con">#}
+{#				<a href="#">1</a>#}
+{#				<a href="#">2</a>#}
+{#				<a href="#">3</a>#}
+{#				<a href="#">4</a>#}
+{#			</div>#}
+{#			<div class="main_image">#}
+{#				<ul>#}
+{#					<li><img src="{% static "img/img_main_1.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_2.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_3.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_4.jpg" %}"/>#}
+{#					</li>#}
+{#				</ul>#}
+{#				<a href="javascript:;" id="btn_prev"></a>#}
+{#				<a href="javascript:;" id="btn_next"></a>#}
+{#			</div>#}
+		</div>
+			<div class="rules">
+				<div class="hide" id="linkSCAlert">
+					<h1><s></s>商城半价</h1>
+					<s>活动内容：通过<em>微信端/电脑端</em>登录广发商城活动专区限时限量半价抢购指定产品。</s>
+					<i>活动对象：名下持有普通积分信用卡的客户，仅持有航空卡、淘宝卡、携程卡、聪明卡、希望卡、异形卡、商务卡、公司卡、转账卡、万应卡、东风日产卡的客户暂无法参与。</i>
+					<b>注意事项：<br />
+						1.“活动价”为客户获得奖励返还后的价格，客户实际购买时以原价支付<br />
+						2.活动专区中注明“积分/积分+现金返半”产品, 成功支付后(含一期或分期)可享产品已使用的积分或<em>积分+现金一半返还</em>，现金以免还款签账额形式奖励<br />
+						3.无标注产品，直接以<em>折扣价购买</em>，且不再返半奖励<br />
+						4.不限渠道购买（无论是电脑端、微信端购买成功，均作为1次计算），每位客户每月（自然月）仅可享受1次<em>“积分/积分+现金返半”优惠</em><br />
+                        5. 满足奖励条件后2个月内将积分或积分+签账额赠送至客户消费的卡片上<br/>
+                    </b><br/>
+					<span class="dot"></span>微信端
+
+					<table>
+						<tr>
+							<td class="panelSC_cell">关注“广发信用卡”并绑定</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}" /></td>
+							<td class="panelSC_cell">点击“我的优惠” </td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom" src="{% static "img/su_jian.png" %}" /></td>
+						</tr>
+						<tr>
+							<td class="panelSC_cell">点击“名品半价购”专区订购指定半价名品，显示“支付成功”即可成功抢购</td>
+							<td class="center"><img class="toRight" src="{% static "img/heng_jian.png" %}" /></td>
+							<td class="panelSC_cell">点击“微商城”</td>
+						</tr>
+					</table><br />
+					<span class="dot"></span>电脑端
+                     <br /><br /> 温馨提示：更多产品秒杀可登录电脑端参与！
+					<table>
+						<tr>
+							<td class="panelSC_pc">持卡人登录广发商城选定“名品半价购”专区中的产品</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_pc">填写配送信息、配送时间等，点击确认购买</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_pc">进入支付页面填写卡号等相关信息，点击确认完成支付，显示“支付成功”即可成功抢购</td>
+						</tr>
+					</table>
+                    <b>
+                        6.活动期间部分参与商户进行调整，实际参与商户以官网实时公布内容的为准<br/>
+                        7.优惠返还时，参与活动的卡片注销或失效，将视为主动放弃<br/>
+                        8.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任
+                    </b>
+                    <!-- <span style="display:inline-block !important;width: 10px;height: 10px;border-radius: 10px;background-color: #c71029;margin-right: 8px"></span>接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！ -->
+				</div>
+				<div class="hide" id="linkHTAlert">
+					<h1><s></s>海淘半价</h1>
+					<s>活动内容：每周指定产品<em>半价抢兑</em>。数量有限，先到先得。</s>
+					<i>活动对象：广发信用卡持卡客户（仅持公司卡、转帐卡、商务卡的客户不参与,附属卡、虚拟卡、异型卡消费归入主卡）</i>
+					<b>注意事项：<br />
+						1.每款产品优惠名额有限，超出限量名额的订单按原价结算。<br />
+						2.“活动价”为客户获得奖励返还后的价格，实际支付时，以商品购买页面所示价格进行支付。<br />
+						3.奖励时，以本活动页面显示的“购买价格”为标准计算奖励金额。购买成功后两个月内，将奖励金额返还至您用于交易的广发信用卡账户。<br />
+                        4.根据中国海关规定，部分产品可能需要支付税费，该部分税费需全额由客户承担。<br />
+                        5.每周四至次周周三为一个活动周期，每活动周期每名客户限奖励1件产品，活动奖励取数后奖励名单将同步上挂广发信用卡官网提供查询。<br />
+{#						5.如购买标注PayPal的产品:<br/>#}
+{#                        (1)需通过PayPal（全球支付首选）使用广发信用卡支付方能享受活动价（注册PayPal账号 <a href="https://www.paypal.com/c2/signup/account?country.x=C2&locale.x=zh_C2&&mpch=ads&intl_cid=27736-214897-12439-74&spid=510503087868697758" style="color: #D31F4C;text-decoration: underline;">点击注册)</a>。具体流程如下：<br />#}
+{#					</b>#}
+{#                    <b>步骤一：注册PayPal账户</b>#}
+{#					<table>#}
+{#						<tr>#}
+{#							<td class="panelHT">注册PayPal就两步，海淘如此简单</td>#}
+{#							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>#}
+{#							<td class="panelHT">点击“立即注册”</td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td></td>#}
+{#							<td></td>#}
+{#							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="panelHT">输入基本个人信息</td>#}
+{#							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>#}
+{#							<td class="panelHT">信用卡信息可跳过，注册成功啦</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#                    <b>步骤二：添加使用卡片</b>#}
+{#					<table>#}
+{#						<tr>#}
+{#							<td class="panelHT">登录您的PayPal账户</td>#}
+{#							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>#}
+{#							<td class="panelHT">点击页面顶部的“用户信息”</td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td></td>#}
+{#							<td></td>#}
+{#							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="panelHT">点击“财务信息”</td>#}
+{#							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>#}
+{#							<td class="panelHT">在“借记卡和信用卡”旁，点击“添加我的卡”。(如果账户中已经添加过其他信用卡,则在“借记卡和信用卡”旁，点击“更新”。) </td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>#}
+{#							<td></td>#}
+{#							<td></td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="panelHT">输入所需信息</td>#}
+{#							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>#}
+{#							<td class="panelHT">点击“添加卡”</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#                    <b>#}
+{#                        （2）所有商品都提供的运输方式为“转运”，部分商品可提供“直邮”。两种运输方式的成本及所需时长不同，以商品页面展示为准，客户可自行选择。部分商品以转运方式运输可提供“邮费优惠”（详见活动页面标示）。<br/>#}
+{#                        （3）购买攻略：海淘教程、paypal教程、国际转运、关税及其他实用工具应有尽有。<br/>#}
+                        6.购买标注“苏宁海外购”的产品，需：<br/>
+                         </b>
+                          <table>
+						<tr>
+							<td class="panelHT">注册/登录苏宁海外购</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">进行实名认证</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">选择“易付宝”</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT"><b>选购商品</b></td>
+						</tr>
+						<tr>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="panelHT">选择广发信用卡支付</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">完成信息填写</td>
+						</tr>
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">收货晒单</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">购买下单</td>
+						</tr>
+					</table>
+                     <b>
+                        7.购买标注“网易考拉海购”的产品，需：
+                    </b>
+                        <table>
+						<tr>
+							<td class="panelHT">注册/登录网易考拉海购</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">选购商品</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">进行实名认证</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT"><b>选择“网易宝”</b></td>
+						</tr>
+						<tr>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="panelHT">选择广发信用卡支付</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">完成信息填写</td>
+						</tr>
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">收货晒单</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">购买下单</td>
+						</tr>
+					</table>
+                    <b>
+                        8.购买标注"海豚村＂的产品，需：
+                    </b>
+                     <table>
+						<tr>
+							<td class="panelHT">注册海豚村用户</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">选购商品</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">支付选择＂银联在线支付＂并输入广发信用卡卡号</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT"><b>购买下单</b></td>
+						</tr>
+						<tr>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="panelHT">验证身份证</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">收货晒单</td>
+						</tr>
+					</table>
+                         <b>
+                         9.部分参与商户或活动产品可能进行调整，实际参与商户和产品以官网或活动页面实时公布内容为准。<br/>
+                        10.活动产品不予退还、恕不开具发票。<br/>
+                        11.已取消、退货、拒绝签收的订单不作优惠返还，如退货前已返还，退货后将扣回相应金额。<br/>
+                        12.优惠返还时，参与活动的卡片注销或失效，将视为主动放弃。<br/>
+                        13.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任。
+                    </b>
+                    <!-- <span style="display:inline-block !important;width: 10px;height: 10px;border-radius: 10px;background-color: #c71029;margin-right: 8px"></span>接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！ -->
+				</div>
+				<div class="hide" id="linkJFAlert">
+					<h1><s></s>积分半价</h1>
+					<s>活动内容：客户至活动指定商户门店刷广发信用卡积分，<em>享半价</em>积分购买活动产品。客户名下多张信用卡积分不可合并支付。</s>
+					<i>参与对象：名下持有普通积分信用卡的客户，仅持有航空卡、淘宝卡、携程卡、聪明卡、希望卡、附属卡、异形卡、商务卡、公司卡、转账卡、万应卡、东风日产卡的客户暂无法参与。</i>
+					<b>优惠内容：<br />
+						1.以下指定品牌指定门店刷积分购物享半价,<em>每月</em>最高返12,000<em>广发</em>积分。<br/>
+						参与品牌：COSTA、哈根达斯、GODIVA、必胜客、汉堡王、肯德基、赛百味、全家、喜市多、Ok便利店、华润万家、圣安娜、万宁<br />
+						2.以下指定品牌指定门店刷积分购物享半价,<em>每月</em>最高返6,000<em>广发</em>积分。<br/>
+						参与品牌：湛江-燊麦、茂名-嘉豪轩、茂名-粮丰园、肇庆-心悦、珠海-味蕾、中山-新天地、阳江-名座、佛山-无忧岛、沈阳-好利来、武汉-快乐柠檬、VANGO、汕头-欧香<br />
+						3.奖励：<em>满足奖励条件后2个月内</em>返还一半<em>广发</em>积分至客户消费的卡片中。
+					</b>
+					<br />
+					<b>注意事项:<br />
+						1.每月限量22000名，先到先得，每人每自然月限享一次返半积分优惠。<br />
+						2.积分POS购物半价优惠活动与店内优惠活动同享。积分兑换的商品不予退还、恕不开具发票。<br />
+						3.活动期间会有部分参与商户进行调整，实际参与商户以官网实时公布内容的为准。<br />
+                        4.优惠返还时，参与活动的卡片注销或失效，将视为主动放弃。<br />
+                        5.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任。
+					</b>
+{#                    <h4 style="color:#D31F4C;text-align: center">万宁加码礼</h4><br/>#}
+{#                    <b>活动时间：2015年12月26日至2016年1月31日</b><br/>#}
+{#                    <b>活动内容：客户至指定万宁门店刷广发信用卡积分，原24,000积分，现半价积分即12,000积分兑换40元万宁抵用券！</b><br/>#}
+{#                    <b>活动对象：名下持有普通积分信用卡的主卡客户，航空卡、淘宝卡、携程卡、聪明卡、希望卡、异形卡、商务卡、公司卡、转账卡、万应卡、东风日产卡暂不参与。</b><br/>#}
+{#                    <b>参与活动流程：</b>#}
+{#					<table>#}
+{#						<tr>#}
+{#							<td class="panelHT">活动期间，至万宁活动指定门店刷广发信用卡积分兑换抵用券</td>#}
+{#							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">至收银台结账时，用广发信用卡支付并出示抵用券</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#                    <b>注意事项:<br />#}
+{#						1.活动期间限量25000份，先到先得，兑完即止！每日每卡限享一次半价积分优惠。<br />#}
+{#                        2.加码活动与其他积分POS购物半价优惠活动共享优惠。客户名下多张信用卡积分不可合并支付。<br />#}
+{#                        3.抵用券不可兑换现金，不设找赎。抵用券仅可活动门店内使用，仅限兑换当日使用。<br />#}
+{#                        ４.实际参与门店以官网实时公布内容的为准。<br />#}
+{#                        ５.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任。#}
+{#					</b>#}
+				</div>
+                <br/>
+
+
+            </div>
+            <div style="display:none" >
+            <script src="http://s4.cnzz.com/z_stat.php?id=1256751266&web_id=1256751266" language="JavaScript"></script>
+        </div>
+	</body>
+</html>

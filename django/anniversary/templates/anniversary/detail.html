@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+		<title>购买流程指引</title>
+		<link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+		<link rel="stylesheet" href="{% static "css/style.css" %}" />
+		<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+{#         <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}"></script>#}
+		<style>
+            body{
+                background: #FFFFFF;
+            }
+        </style>
+        <script>
+
+			$(document).ready(function() {
+
+                //控制要显示哪个活动细则
+                var rulesID=$.request.queryString["type"];
+                $("#"+rulesID).show();
+				//轮播器高度控制
+				$("#carousel").css("height", $(window).width() * 0.5053333333333333);
+				$("#carousel .flicking_con:first-child").css("top", $(window).width() * 0.5053333333333333 - 25);
+				//轮播器监听事件
+				$(".main_visual").hover(function() {
+					$("#btn_prev,#btn_next").fadeIn()
+				}, function() {
+					$("#btn_prev,#btn_next").fadeOut()
+				});
+				$dragBln = false;
+				$(".main_image").touchSlider({
+					flexible: true,
+					speed: 600,
+					btn_prev: $("#btn_prev"),
+					btn_next: $("#btn_next"),
+					paging: $(".flicking_con a"),
+					counter: function(e) {
+						$(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+					}
+				});
+				$(".main_image").bind("mousedown", function() {
+					$dragBln = false;
+				});
+				$(".main_image").bind("dragstart", function() {
+					$dragBln = true;
+				});
+				$(".main_image a").click(function() {
+					if ($dragBln) {
+						return false;
+					}
+				});
+				timer = setInterval(function() {
+					$("#btn_next").click();
+				}, 5000);
+				$(".main_visual").hover(function() {
+					clearInterval(timer);
+				}, function() {
+					timer = setInterval(function() {
+						$("#btn_next").click();
+					}, 5000);
+				});
+				$(".main_image").bind("touchstart", function() {
+					clearInterval(timer);
+				}).bind("touchend", function() {
+					timer = setInterval(function() {
+						$("#btn_next").click();
+					}, 5000);
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+    <!--banner条-->
+		<div class="banner" style="border-bottom: 1px solid #e7e7e7;">
+			<a href="/m">返回</a>
+		</div>
+		<!--轮播器-->
+{#		<div id="carousel" class="main_visual">#}
+{#            <img style="width: 100%;"  src="{% static "img/img_main_1.jpg" %}"/>#}
+{#            			<a href="/rules" style="display: block;position: absolute;right: 10px;bottom: 10px;width:24%;height: 3.2rem;"></a>#}
+{#             请勿删除，目前轮播器只有一张图片，暂时不需要用到#}
+{#			<div class="flicking_con">#}
+{#				<a href="#">1</a>#}
+{#				<a href="#">2</a>#}
+{#				<a href="#">3</a>#}
+{#				<a href="#">4</a>#}
+{#			</div>#}
+{#			<div class="main_image">#}
+{#				<ul>#}
+{#					<li><img src="{% static "img/img_main_1.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_2.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_3.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_4.jpg" %}"/>#}
+{#					</li>#}
+{#				</ul>#}
+{#				<a href="javascript:;" id="btn_prev"></a>#}
+{#				<a href="javascript:;" id="btn_next"></a>#}
+{#			</div>#}
+{#		</div>#}
+			<div class="rules">
+				<div  id="linkSCAlert">
+                    <h1 style="text-align: center;color: black;font-size: 1.2rem;">购买流程指引</h1>
+					<span class="dot"></span>微信端
+					<table>
+						<tr>
+							<td class="panelSC_cell">关注“广发信用卡”并绑定</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}" /></td>
+							<td class="panelSC_cell">点击“我的优惠” </td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom" src="{% static "img/su_jian.png" %}" /></td>
+						</tr>
+						<tr>
+							<td class="panelSC_cell">点击“名品半价购”专区订购指定半价名品，显示“支付成功”即可成功抢购</td>
+							<td class="center"><img class="toRight" src="{% static "img/heng_jian.png" %}" /></td>
+							<td class="panelSC_cell">点击“微商城”</td>
+						</tr>
+					</table><br />
+					<span class="dot"></span>电脑端
+                     <br /><br /> 温馨提示：更多产品秒杀可登录电脑端参与！
+					<table>
+						<tr>
+							<td class="panelSC_pc">持卡人登录广发商城选定“名品半价购”专区中的产品</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_pc">填写配送信息、配送时间等，点击确认购买</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_pc">进入支付页面填写卡号等相关信息，点击确认完成支付，显示“支付成功”即可成功抢购</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+            <div style="display:none" >
+            <script src="http://s4.cnzz.com/z_stat.php?id=1256751266&web_id=1256751266" language="JavaScript"></script>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+        <meta name="format-detection" content="telephone=no" />
+		<title>广发卡名品半价购</title>
+		<link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+		<link rel="stylesheet" href="{% static "css/style.css" %}" />
+		<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+{#        <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}"></script>#}
+		<script type="text/javascript" src="{% static "js/jquery.touchSlider.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/jquery.lazyload.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.cookie.js" %}"></script>
+		<script>
+
+			 //记录各二级导航栏的锚点位置
+			var sc_anchor = new Array();
+			var ht_anchor = new Array();
+			var jf_anchor = new Array();
+			var addHeight;
+			var $float;
+
+			$(window).load(function() {
+				addHeight = $("#carousel").height() + $("#float").height();
+
+			});
+			$(document).ready(function() {
+{#                isNeedAlert($.cookie("currentContent"));#}
+				$float = $("#float");
+				//轮播器高度控制
+				$("#carousel").css("height", $(window).width() * 0.5053333333333333);
+                 //请勿删除，目前轮播器只有一张图片，暂时不需要用到
+{#				$("#carousel .flicking_con:first-child").css("top", $(window).width() * 0.5053333333333333 - 25);#}
+{#				//轮播器监听事件#}
+{#				$(".main_visual").hover(function() {#}
+{#					$("#btn_prev,#btn_next").fadeIn()#}
+{#				}, function() {#}
+{#					$("#btn_prev,#btn_next").fadeOut()#}
+{#				});#}
+{#				$dragBln = false;#}
+{#				$(".main_image").touchSlider({#}
+{#					flexible: true,#}
+{#					speed: 600,#}
+{#					btn_prev: $("#btn_prev"),#}
+{#					btn_next: $("#btn_next"),#}
+{#					paging: $(".flicking_con a"),#}
+{#					counter: function(e) {#}
+{#						$(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");#}
+{#					}#}
+{#				});#}
+{#				$(".main_image").bind("mousedown", function() {#}
+{#					$dragBln = false;#}
+{#				});#}
+{#				$(".main_image").bind("dragstart", function() {#}
+{#					$dragBln = true;#}
+{#				});#}
+{#				$(".main_image a").click(function() {#}
+{#					if ($dragBln) {#}
+{#						return false;#}
+{#					}#}
+{#				});#}
+{#				timer = setInterval(function() {#}
+{#					$("#btn_next").click();#}
+{#				}, 5000);#}
+{#				$(".main_visual").hover(function() {#}
+{#					clearInterval(timer);#}
+{#				}, function() {#}
+{#					timer = setInterval(function() {#}
+{#						$("#btn_next").click();#}
+{#					}, 5000);#}
+{#				});#}
+{#				$(".main_image").bind("touchstart", function() {#}
+{#					clearInterval(timer);#}
+{#				}).bind("touchend", function() {#}
+{#					timer = setInterval(function() {#}
+{#						$("#btn_next").click();#}
+{#					}, 5000);#}
+{#				});#}
+				//监听一级导航栏点击事件
+				$("#nav a").click(function() {
+                     isNeedAlert($(this).attr("id"));
+                     $.cookie("currentContent",$(this).attr("id"), {
+					expires: 365, //有效日期
+				        });
+					//更改背景
+					$(this).addClass("onfocus").siblings().removeClass("onfocus");
+					//更改图片
+					$("#nav a").each(function() {
+						var src = "";
+						if ($(this).hasClass("onfocus")) {
+							switch ($(this).attr("id")) {
+								case "shangcheng":
+									src ="{% static "img/icon_shangchengbai.png" %}";
+									break;
+								case "haitao":
+							　   	src ="{% static "img/icon_haitaobai.png" %}";
+									break;
+								case "jifen":
+									src ="{% static "img/icon_jifenbai.png" %}";
+									break;
+							}
+						} else {
+							switch ($(this).attr("id")) {
+								case "shangcheng":
+									src ="{% static "img/icon_shangcheng.png" %}";
+
+									break;
+								case "haitao":
+									src ="{% static "img/icon_haitao.png" %}";
+
+									break;
+								case "jifen":
+									src ="{% static "img/icon_jifen.png" %}";
+
+									break;
+							}
+						}
+						$(this).children(":first").attr("src", src);
+					});
+					//控制二级导航栏,内容块的显示隐藏
+					switch ($(this).attr("id")) {
+						case "shangcheng":
+							$("#sc_anchor").show();
+							$("#ht_anchor").hide();
+							$("#jf_anchor").hide();
+
+							$("#shangchengContent").show();
+							$("#haitaoContent").hide();
+							$("#jifenContent").hide();
+                                sc_anchor = [
+                                    $("#sc_anchor_my").offset().top - (!isfirst ? 0 : addHeight) - 10,
+                                        $("#sc_anchor_yybj").offset().top - (!isfirst ? 0 : addHeight) - 10,
+                                    $("#sc_anchor_fsxb").offset().top - (!isfirst ? 0 : addHeight) - 10,
+								$("#sc_anchor_jjsh").offset().top - (!isfirst ? 0 : addHeight) - 10,
+								$("#sc_anchor_mz").offset().top - (!isfirst ? 0 : addHeight) - 10
+							];
+                    console.log(sc_anchor); console.log(ht_anchor); console.log(jf_anchor);
+
+							break;
+						case "haitao":
+							$("#sc_anchor").hide();
+							$("#ht_anchor").show();
+							$("#jf_anchor").hide();
+
+							$("#shangchengContent").hide();
+							$("#haitaoContent").show();
+							$("#jifenContent").hide();
+                                 ht_anchor = [$("#ht_anchor_fsxb").offset().top - (!isfirst ? 0 : addHeight) - 10,
+
+								$("#ht_anchor_mz").offset().top - (!isfirst ? 0 : addHeight) - 10,
+								$("#ht_anchor_my").offset().top - (!isfirst ? 0 : addHeight) - 10,
+								$("#ht_anchor_yybj").offset().top - (!isfirst ? 0 : addHeight) - 10,
+                                     $("#ht_anchor_jjsh").offset().top - (!isfirst ? 0 : addHeight) - 10];
+                   console.log(sc_anchor); console.log(ht_anchor); console.log(jf_anchor);
+
+							break;
+						case "jifen":
+							$("#sc_anchor").hide();
+							$("#ht_anchor").hide();
+							$("#jf_anchor").show();
+
+							$("#shangchengContent").hide();
+							$("#haitaoContent").hide();
+							$("#jifenContent").show();
+                                jf_anchor = [$("#jf_anchor_cs").offset().top - (!isfirst ? 0 : addHeight) - 10,
+                                    $("#jf_anchor_dgtp").offset().top - (!isfirst ? 0 : addHeight) - 10,
+                                    $("#jf_anchor_bld").offset().top - (!isfirst ? 0 : addHeight) - 10,
+								    $("#jf_anchor_cy").offset().top - (!isfirst ? 0 : addHeight) - 10
+							];
+                    console.log(sc_anchor); console.log(ht_anchor); console.log(jf_anchor);
+
+							break;
+					}
+
+{#                    $("html,body").animate({#}
+{#					scrollTop:0#}
+{#				}, 500);#}
+				});
+				//监听二级导航栏点击事件
+				$(".anchor a").click(function() {
+					setTimeout("$(this).addClass('anchorfoucs').siblings().removeClass('anchorfoucs')", 1100)
+				});
+				//监听滚动条，使导航栏置顶
+				//获取轮播器高度
+				var $carousel = $("#carousel");
+				var $nav = $("#float");
+				$(window).scroll(function() {
+					//轮播器是否置顶判断
+					var top = $(window).scrollTop();
+					if (top > $carousel.height() - 60) {
+						$nav.addClass("fixed");
+{#						$carousel.hide();#}
+						isfirst = false;
+					} else if (top < $carousel.height() - 60) {
+						$nav.removeClass("fixed");
+{#						$carousel.show();#}
+						isfirst = true;
+					}
+					//监听滚动条位置，改变二级菜单
+					var top = top + $float.height();
+					var scVisible = $("#shangchengContent").is(":visible");
+					if (scVisible) {
+						if (top < sc_anchor[1]) {
+							$("#sc_anchor a").eq(0).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= sc_anchor[1] && top < sc_anchor[2]) {
+							$("#sc_anchor a").eq(1).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= sc_anchor[2] && top < sc_anchor[3]) {
+							$("#sc_anchor a").eq(2).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= sc_anchor[3] && top < sc_anchor[4]) {
+							$("#sc_anchor a").eq(3).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if ($(document).scrollTop() + $(window).height() == $(document).height()||top >= sc_anchor[4]) {
+							$("#sc_anchor a").eq(4).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+					}
+					var htVisible = $("#haitaoContent").is(":visible");
+					if (htVisible) {
+						if (top < ht_anchor[1]) {
+							$("#ht_anchor a").eq(0).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= ht_anchor[1] && top < ht_anchor[2]) {
+							$("#ht_anchor a").eq(1).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= ht_anchor[2] && top < ht_anchor[3]) {
+							$("#ht_anchor a").eq(2).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= ht_anchor[3] && top < ht_anchor[4]) {
+							$("#ht_anchor a").eq(3).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if ($(document).scrollTop() + $(window).height() == $(document).height()||top >= ht_anchor[4]) {
+							$("#ht_anchor a").eq(4).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+					}
+					var jfVisible = $("#jifenContent").is(":visible");
+					if (jfVisible) {
+						if (top < jf_anchor[1]) {
+							$("#jf_anchor a").eq(0).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= jf_anchor[1] && top < jf_anchor[2]) {
+							$("#jf_anchor a").eq(1).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if (top >= jf_anchor[2] && top < jf_anchor[3]) {
+							$("#jf_anchor a").eq(2).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+						if ($(document).scrollTop() + $(window).height() == $(document).height()||top >= jf_anchor[3]) {
+							$("#jf_anchor a").eq(3).addClass("anchorfoucs").siblings().removeClass("anchorfoucs");
+						}
+					}
+
+				});
+                 //加载商品信息
+                 getProduct(1);getProduct(2);getProduct(3);
+                 setTimeout(getCurrentContent,500);
+
+
+			});
+             function getCurrentContent(){
+                 $("#content").show();
+                 $("#"+ $.cookie("currentContent")).trigger("click");
+             }
+			 //滚动到对应子分类的方法
+			var isfirst = true; //判断是不是轮播器隐藏前进行的滚动
+			function scrollt(id) {
+				var move = $(id).offset().top - $("#float").height();
+				if (isfirst) {
+					move = move - $("#carousel").height() - $("#float").height();
+				}
+				$("html,body").animate({
+					scrollTop: move
+				}, 500);
+			}
+		    //请求商品信息 type→1:商场半价 2:海淘半价 3:积分POS半价
+            function getProduct(type){
+                var jsonObject="";
+                 $.get("/pullitems/" +type, function (result) {
+                        if (result != "") {
+                            addToUl(result,type);
+                        }
+                });
+                return jsonObject;
+            }
+             //生成商品li
+            function createLi(data,type){
+                var result="";
+                if(data!=undefined){
+                switch (type){
+                    case 1:
+                        for( var i=0;i<data.length;i++){
+                            result=result+"<li>" +
+                                                "<img onclick='window.open(\"/detail"+"\")' class='lazy' data-original='"+data[i][3]+"' src='{% static 'img/none.jpg' %}' />" +
+                                                "<div class='product'>" +
+                                                    "<b>"+data[i][1]+"</b>" +
+                                                    "<span>原价￥"+data[i][4]+"或"+addKannma(data[i][6])+"积分</span>" +
+                                                    "<i>活动价￥"+data[i][5]+"<em>或"+addKannma(data[i][7])+"积分</em></i>" +
+                                                    "<a href='/detail'>立即查看</a>" +
+                                                "</div>" +
+                                            "</li>";
+                        }
+                        break;
+                    case 2:
+                        for(var i=0;i<data.length;i++){
+                            result=result+"<li>" +
+                                                "<img onclick='window.open(\"/item/"+data[i][0]+"?m=true\")' class='lazy' data-original='"+data[i][3]+"' src='{% static 'img/none.jpg' %}' />" +
+                                                "<div class='product'>" +
+                                                    "<b>"+data[i][1]+"</b>" +
+                                                    "<span>原价￥"+data[i][4]+"</span>" +
+                                                    "<i>活动价￥"+data[i][5]+"</i>" +
+                                                    "<a href='/item/"+data[i][0]+"?m=true'>立即查看</a>" +
+                                                "</div>" +
+                                            "</li>";
+                        }
+                        break;
+                    case 3:
+                        for( var i=0;i<data.length;i++){
+                            result=result+"<li>" +
+                                                "<img onclick='window.open(\"/item/"+data[i][0]+"\")' class='lazy' data-original='"+data[i][3]+"' src='{% static 'img/none.jpg' %}' />" +
+                                                "<div class='product'>" +
+                                                    "<b>"+data[i][1]+"</b>" +
+                                                    "<a href='/item/"+data[i][0]+"'>立即查看</a>" +
+                                                "</div>" +
+                                            "</li>";
+                        }
+                        break;
+
+
+                }
+               }
+                return result;
+
+            }
+            //判断是否需要请求数据,要的话发出请求,并将商品追加到对应的ul中
+            function addToUl(jsonObject,type){
+
+                if(type==1&&$("#sc_fsxb_ul").children().length==0){
+
+                    $("#sc_fsxb_ul").append(createLi(jsonObject[1],type));
+                    $("#sc_jjsh_ul").append(createLi(jsonObject[2],type));
+                    $("#sc_mz_ul").append(createLi(jsonObject[3],type));
+                    $("#sc_my_ul").append(createLi(jsonObject[4],type));
+                    $("#sc_yybj_ul").append(createLi(jsonObject[5],type));
+
+
+                }
+                else if(type==2&&$("#ht_fsxb_ul").children().length==0){
+
+                    $("#ht_fsxb_ul").append(createLi(jsonObject[6],type));
+                    $("#ht_jjsh_ul").append(createLi(jsonObject[7],type));
+                    $("#ht_mz_ul").append(createLi(jsonObject[8],type));
+                    $("#ht_my_ul").append(createLi(jsonObject[9],type));
+                    $("#ht_yybj_ul").append(createLi(jsonObject[10],type));
+
+
+
+                }
+                else if(type==3&&$("#jf_cs_ul").children().length==0){
+
+                    $("#jf_cs_ul").append(createLi(jsonObject[11],type));
+                    $("#jf_bld_ul").append(createLi(jsonObject[12],type));
+                    $("#jf_cy_ul").append(createLi(jsonObject[13],type));
+                    $("#jf_dgtp_ul").append(createLi(jsonObject[14],type));
+
+
+                }
+                $("img.lazy").lazyload();
+            }
+            //判断需不需要显示哪个弹窗
+			function isNeedAlert(id){
+				switch(id){
+					case "shangcheng":id="linkSC";break;
+					case "haitao":id="linkHT";break;
+					case "jifen":id="linkJF";break;
+				}
+				if ($.cookie(id) == null) {
+				$(".overlay").show();
+				$(".alert").show();
+				$("#" + id + "Alert").show().siblings("div").hide();
+				console.log("#" + id + "Alert")
+				$.cookie(id, "true", {
+					expires: 365, //有效日期
+				});
+				}
+				else{
+					$(".overlay").hide();
+				}
+			}
+            function addKannma(number) {
+         var num = number + "";
+         num = num.replace(new RegExp(",","g"),"");
+         // 正负号处理
+         var symble = "";
+         if(/^([-+]).*$/.test(num)) {
+             symble = num.replace(/^([-+]).*$/,"$1");
+             num = num.replace(/^([-+])(.*)$/,"$2");
+         }
+
+         if(/^[0-9]+(\.[0-9]+)?$/.test(num)) {
+             var num = num.replace(new RegExp("^[0]+","g"),"");
+             if(/^\./.test(num)) {
+             num = "0" + num;
+             }
+
+             var decimal = num.replace(/^[0-9]+(\.[0-9]+)?$/,"$1");
+             var integer= num.replace(/^([0-9]+)(\.[0-9]+)?$/,"$1");
+
+             var re=/(\d+)(\d{3})/;
+
+             while(re.test(integer)){
+                 integer = integer.replace(re,"$1,$2");
+             }
+             return symble + integer + decimal;
+
+         } else {
+             return number;
+         }
+     }
+        </script>
+	</head>
+	<body>
+		<!--轮播器-->
+		<div id="carousel" class="main_visual">
+            <img style="width: 100%;"  src="{% static "img/img_main_1.jpg" %}"/>
+{#            			<a href="/rules?type=sc" style="display: block;position: absolute;right: 10px;bottom: 10px;width:24%;height: 3.2rem;"></a>#}
+{#             请勿删除，目前轮播器只有一张图片，暂时不需要用到#}
+{#			<div class="flicking_con">#}
+{#				<a href="#">1</a>#}
+{#				<a href="#">2</a>#}
+{#				<a href="#">3</a>#}
+{#				<a href="#">4</a>#}
+{#			</div>#}
+{#			<div class="main_image">#}
+{#				<ul>#}
+{#					<li><img src="{% static "img/img_main_1.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_2.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_3.jpg" %}"/>#}
+{#					</li>#}
+{#					<li><img src="{% static "img/img_main_4.jpg" %}"/>#}
+{#					</li>#}
+{#				</ul>#}
+{#				<a href="javascript:;" id="btn_prev"></a>#}
+{#				<a href="javascript:;" id="btn_next"></a>#}
+{#			</div>#}
+		</div>
+		<!--导航块-->
+		<div id="float" class="navbar-wrapper" style="width: 100%;z-index: 99999999999;">
+			<!--一级导航块-->
+			<div id="nav">
+				<a id="shangcheng" class="onfocus"><img src="{% static "img/icon_shangchengbai.jpg" %}"></a>
+				<a id="haitao"><img src="{% static "img/icon_haitao.jpg" %}"></a>
+				<a id="jifen"><img src="{% static "img/icon_jifen.jpg"  %}"></a>
+			</div>
+			<!--二级导航块：商城半价-->
+			<div id="sc_anchor" class="anchor">
+                <a class="anchorfoucs" onclick="scrollt('#sc_anchor_my'); return false;">美妆</a>
+                <a onclick="scrollt('#sc_anchor_yybj'); return false;">居家生活</a>
+				<a  onclick="scrollt('#sc_anchor_fsxb'); return false;">数码</a>
+				<a onclick="scrollt('#sc_anchor_jjsh'); return false;">美食</a>
+				<a onclick="scrollt('#sc_anchor_mz'); return false;">配饰箱包</a>
+
+			</div>
+			<!--二级导航块：海淘半价-->
+			<div id="ht_anchor" class="anchor hide">
+				<a class="anchorfoucs" onclick="scrollt('#ht_anchor_fsxb'); return false;">服饰鞋包</a>
+				<a onclick="scrollt('#ht_anchor_mz'); return false;">美妆</a>
+				<a onclick="scrollt('#ht_anchor_my'); return false;">母婴</a>
+				<a onclick="scrollt('#ht_anchor_yybj'); return false;">营养保健</a>
+                <a onclick="scrollt('#ht_anchor_jjsh'); return false;">居家生活</a>
+			</div>
+			<!--二级导航块：积分POS半价-->
+			<div id="jf_anchor" class="anchor hide">
+                <a class="anchorfoucs" onclick="scrollt('#jf_anchor_cs'); return false;">超市</a>
+                <a onclick="scrollt('#jf_anchor_dgtp'); return false;">蛋糕甜品</a>
+				<a onclick="scrollt('#jf_anchor_bld'); return false;">便利店</a>
+				<a onclick="scrollt('#jf_anchor_cy'); return false;">餐饮</a>
+			</div>
+		</div>
+		<!--内容块-->
+        <div id="content">
+			<!--商城半价内容块-->
+			<div id="shangchengContent" class="hide">
+                <div id="sc_anchor_my" class="itemhead">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td class="itemheadFirst"><s></s></td>
+                            <td class="itemheadFirst"><b>美妆</b></td>
+                            <td class="itemheadFirst"><i>
+                                限时抢购至3月31日，每天10点-23点
+                                </i>
+                            </td>
+                            <td style="width: 15%;"  class="itemheadFirst"><a target="_blank" href="http://www.cgbchina.com.cn/jsp/include/CN2/creditcard/rewardCheck.jsp?tid=20372461" class="rules_btn">奖励查询</a></td>
+                            <td style="padding-left: 5px;width: 15%;" class="itemheadFirst"><a target="_blank" href="/rules?type=linkSCAlert" class="rules_btn">活动细则</a></td>
+                        </tr>
+                    </table>
+				</div>
+				<div id="sc_my" class="listitem">
+					<ul id="sc_my_ul">
+
+                    </ul>
+				</div>
+                <div id="sc_anchor_yybj" class="itemhead">
+					<s></s><b>居家生活</b><i>限时抢购至3月31日，每天10点-23点</i>
+				</div>
+				<div id="sc_yybj" class="listitem">
+					<ul id="sc_yybj_ul">
+					</ul>
+				</div>
+				<div id="sc_anchor_fsxb" class="itemhead">
+					<s></s><b>数码</b><i>限时抢购至3月31日，每天10点-23点</i>
+				</div>
+				<div id="sc_fsxb" class="listitem">
+					<ul id="sc_fsxb_ul">
+
+					</ul>
+				</div>
+				<div id="sc_anchor_jjsh" class="itemhead">
+					<s></s><b>美食</b><i>限时抢购至3月31日，每天10点-23点</i>
+				</div>
+				<div id="sc_jjsh" class="listitem">
+
+					<ul id="sc_jjsh_ul">
+
+					</ul>
+				</div>
+				<div id="sc_anchor_mz" class="itemhead">
+					<s></s><b>配饰箱包</b><i>限时抢购至3月31日，每天10点-23点</i>
+				</div>
+				<div id="sc_mz" class="listitem">
+					<ul id="sc_mz_ul">
+
+					</ul>
+				</div>
+                      <!--   <div id="tip" style="clear:both;font-size: 0.9rem;font-style: normal;color: #6d6d6d;margin-left: 2.66666666666667%;margin-right: 2.66666666666667%;">接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！</div> -->
+
+			</div>
+			<!--海淘半价内容块-->
+			<div id="haitaoContent" class="hide">
+				<div id="ht_anchor_fsxb" class="itemhead">
+{#					<s></s><b>服饰鞋包</b><i>每周四上新，限时抢购：2016.3.24日10点-2016.3.31日23点</i>#}
+                      <table style="width: 100%;">
+                        <tr>
+                            <td class="itemheadFirst"><s></s></td>
+                            <td class="itemheadFirst"><b>服饰鞋包</b></td>
+                            <td class="itemheadFirst"><i>
+                                每周四上新，限时抢购：2016.3.24日10点-2016.3.31日23点
+                                </i>
+                            </td>
+                            <td style="width: 15%;"  class="itemheadFirst"><a target="_blank" href="http://www.cgbchina.com.cn/jsp/include/CN2/creditcard/rewardCheck.jsp?tid=20372435" class="rules_btn">奖励查询</a></td>
+                            <td style="padding-left: 5px;width: 15%;" class="itemheadFirst"><a target="_blank" href="/rules?type=linkHTAlert" class="rules_btn">活动细则</a></td>
+                        </tr>
+                    </table>
+				</div>
+				<div id="ht_fsxb" class="listitem">
+					<ul id="ht_fsxb_ul">
+
+					</ul>
+				</div>
+				<div id="ht_anchor_mz" class="itemhead">
+					<s></s><b>美妆</b><i>每周四上新，限时抢购：2016.3.24日10点-2016.3.31日23点</i>
+				</div>
+				<div id="ht_mz" class="listitem">
+					<ul  id="ht_mz_ul">
+
+					</ul>
+				</div>
+				<div id="ht_anchor_my" class="itemhead">
+					<s></s><b>母婴</b><i>每周四上新，限时抢购：2016.3.24日10点-2016.3.31日23点</i>
+				</div>
+				<div id="ht_my" class="listitem">
+					<ul  id="ht_my_ul">
+
+
+					</ul>
+				</div>
+				<div id="ht_anchor_yybj" class="itemhead">
+					<s></s><b>营养保健</b><i>每周四上新，限时抢购：2016.3.24日10点-2016.3.31日23点</i>
+				</div>
+				<div id="ht_yybj" class="listitem">
+					<ul  id="ht_yybj_ul">
+
+
+					</ul>
+				</div>
+                <div id="ht_anchor_jjsh" class="itemhead">
+					<s></s><b>居家生活</b><i>每周四上新，限时抢购：2016.3.24日10点-2016.3.31日23点</i>
+				</div>
+				<div id="ht_jjsh" class="listitem">
+
+					<ul  id="ht_jjsh_ul">
+
+					</ul>
+				</div>
+                        <!-- <div id="tip" style="clear:both;font-size: 0.9rem;font-style: normal;color: #6d6d6d;margin-left: 2.66666666666667%;margin-right: 2.66666666666667%;">接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！</div> -->
+
+			</div>
+			<!--积分POS半价内容块-->
+			<div id="jifenContent" class="hide">
+
+                <div id="jf_anchor_cs" class="itemhead">
+{#					<s></s><b>超市</b>#}
+                    <table style="width:100%;">
+                        <tr>
+                            <td class="itemheadFirst" style="width:5px"><s></s></td>
+                            <td class="itemheadFirst"><b>超市</b></td>
+                            <td style="width: 15%;"  class="itemheadFirst"><a target="_blank"  href="http://www.cgbchina.com.cn/jsp/include/CN2/creditcard/rewardCheck.jsp?tid=20372487" class="rules_btn">奖励查询</a></td>
+                            <td style="padding-left: 5px;width: 15%;" class="itemheadFirst"><a target="_blank" href="/rules?type=linkJFAlert" class="rules_btn">活动细则</a></td>
+                        </tr>
+                    </table>
+				</div>
+				<div id="jf_cs" class="listitem">
+					<ul id="jf_cs_ul" >
+
+					</ul>
+				</div>
+
+
+                <div id="jf_anchor_dgtp" class="itemhead">
+					<s></s><b>蛋糕甜品</b>
+{#                    <table style="width:100%;">#}
+{#                        <tr>#}
+{#                            <td class="itemheadFirst" style="width:5px"><s></s></td>#}
+{#                            <td class="itemheadFirst"><b>蛋糕甜品</b></td>#}
+{#                            <td  class="itemheadFirst" style="width: 15%;"><a target="_blank" href="/rules?type=linkJFAlert" class="rules_btn">活动细则</a></td>#}
+{#                        </tr>#}
+{#                    </table>#}
+				</div>
+				<div id="jf_dgtp" class="listitem">
+					<ul id="jf_dgtp_ul">
+
+					</ul>
+				</div>
+
+
+
+                <div id="jf_anchor_bld" class="itemhead">
+					<s></s><b>便利店</b>
+				</div>
+				<div id="jf_bld" class="listitem">
+					<ul id="jf_bld_ul">
+
+					</ul>
+				</div>
+
+				<div id="jf_anchor_cy" class="itemhead">
+					<s></s><b>餐饮</b>
+				</div>
+				<div id="jf_cy" class="listitem">
+					<ul id="jf_cy_ul">
+
+					</ul>
+				</div>
+
+{#                <div id="jf_anchor_cs" class="itemhead">#}
+{#					<s></s><b>超市</b>#}
+{#				</div>#}
+{#				<div id="jf_cs" class="listitem">#}
+{#					<ul id="jf_cs_ul" >#}
+{##}
+{#					</ul>#}
+{#				</div>#}
+
+			</div>
+
+	</div>
+
+        <div class="overlay  hide" >
+
+			<div class="alert"  >
+				<img src="{% static "img/closed.png" %}" />
+				<div id="linkSCAlert" >
+					<h1>商城半价</h1>
+					<s>活动内容：通过<em>微信端/电脑端</em>登录广发商城活动专区限时限量半价抢购指定产品。</s>
+					<i>活动对象：名下持有普通积分信用卡的客户，仅持有航空卡、淘宝卡、携程卡、聪明卡、希望卡、异形卡、商务卡、公司卡、转账卡、万应卡、东风日产卡的客户暂无法参与。</i>
+					<b>注意事项：<br />
+                        1.“活动价”为客户获得奖励返还后的价格，客户实际购买时以原价支付<br />
+						2.活动专区中注明“积分/积分+现金返半”产品, 成功支付后(含一期或分期)可享产品已使用的积分或<em>积分+现金一半返还</em>，现金以免还款签账额形式奖励<br />
+						3.无标注产品，直接以<em>折扣价购买</em>，且不再返半奖励<br />
+						4.不限渠道购买（无论是电脑端、微信端购买成功，均作为1次计算），每位客户每月（自然月）仅可享受1次<em>“积分/积分+现金返半”优惠</em><br />
+                        5. 满足奖励条件后2个月内将积分或积分+签账额赠送至客户消费的卡片上<br/>
+					</b>
+					<span class="dot"></span>微信端
+					<table>
+						<tr>
+							<td class="panelSC_cell">关注“广发信用卡”并绑定</td>
+							<td class="center"><img class="toLeft" src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_cell">点击“我的优惠” </td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom" src="{% static "img/su_jian.png" %}" /></td>
+						</tr>
+						<tr>
+							<td class="panelSC_cell" >点击“名品半价购”专区订购指定半价名品，显示“支付成功”即可成功抢购</td>
+							<td class="center"><img class="toRight"  src="{% static "img/heng_jian.png" %}" /></td>
+							<td class="panelSC_cell">点击“微商城”</td>
+						</tr>
+					</table>
+					<span class="dot"></span>电脑端
+                    <br />
+					温馨提示：更多产品秒杀可登录电脑端参与！
+					<table>
+						<tr>
+							<td class="panelSC_pc">持卡人登录广发商城选定“名品半价购”专区中的产品</td>
+							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_pc">填写配送信息、配送时间等，点击确认购买</td>
+							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}"/></td>
+							<td class="panelSC_pc" >进入支付页面填写卡号等相关信息，点击确认完成支付，显示“支付成功”即可成功抢购</td>
+						</tr>
+					</table>
+                    <b>
+                        6.活动期间部分参与商户进行调整，实际参与商户以官网实时公布内容的为准<br/>
+                        7.优惠返还时，参与活动的卡片注销或失效，将视为主动放弃<br/>
+                        8.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任
+                    </b>
+{#					<a href="/rules">活动细则</a>#}
+                    <!-- <span style="display:inline-block !important;width: 10px;height: 10px;border-radius: 10px;background-color: #c71029;margin-right: 8px"></span>接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！ -->
+
+				</div>
+				<div id="linkHTAlert"  >
+					<h1>海淘半价</h1>
+					<s>活动内容：每周指定产品<em>半价抢兑</em>。数量有限，先到先得。</s>
+					<i>活动对象：广发信用卡持卡客户（仅持公司卡、转帐卡、商务卡的客户不参与,附属卡、虚拟卡、异型卡消费归入主卡）</i>
+					<b>注意事项：<br />
+						1.每款产品优惠名额有限，超出限量名额的订单按原价结算。<br />
+						2.“活动价”为客户获得奖励返还后的价格，实际支付时，以商品购买页面所示价格进行支付。<br />
+						3.奖励时，以本活动页面显示的“购买价格”为标准计算奖励金额。购买成功后两个月内，将奖励金额返还至您用于交易的广发信用卡账户。<br />
+                        4.根据中国海关规定，部分产品可能需要支付税费，该部分税费需全额由客户承担。<br />
+                        5.每周四至次周周三为一个活动周期，每活动周期每名客户限奖励1件产品，活动奖励取数后奖励名单将同步上挂广发信用卡官网提供查询。<br />
+{#						5.如购买标注PayPal的产品:<br/>#}
+{#                        (1)需通过PayPal（全球支付首选）使用广发信用卡支付方能享受活动价（注册PayPal账号 <a href="https://www.paypal.com/c2/signup/account?country.x=C2&locale.x=zh_C2&&mpch=ads&intl_cid=27736-214897-12439-74&spid=510503087868697758" style="color: #D31F4C;text-decoration: underline;">点击注册)</a>。具体流程如下：<br />#}
+{#					</b>#}
+{#                    <b>步骤一：注册PayPal账户</b>#}
+{#					<table>#}
+{#						<tr>#}
+{#							<td class="panelHT">注册PayPal就两步，海淘如此简单</td>#}
+{#							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">点击“立即注册”</td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td></td>#}
+{#							<td></td>#}
+{#							<td class="center"><img class="toBottom"  src="{% static "img/su_jian.png" %}" /></td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="panelHT">输入基本个人信息</td>#}
+{#							<td class="center"><img class="toRight"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">信用卡信息可跳过，注册成功啦</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#                    <b>步骤二：添加使用卡片</b>#}
+{#					<table>#}
+{#						<tr>#}
+{#							<td class="panelHT">登录您的PayPal账户</td>#}
+{#							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">点击页面顶部的“用户信息”</td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td></td>#}
+{#							<td></td>#}
+{#							<td class="center"><img class="toBottom"  src="{% static "img/su_jian.png" %}" /></td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="panelHT">点击“财务信息”</td>#}
+{#							<td class="center"><img class="toRight"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">在“借记卡和信用卡”旁，点击“添加我的卡”。(如果账户中已经添加过其他信用卡,则在“借记卡和信用卡”旁，点击“更新”。) </td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="center"><img class="toBottom"  src="{% static "img/su_jian.png" %}" /></td>#}
+{#							<td></td>#}
+{#							<td></td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td class="panelHT">输入所需信息</td>#}
+{#							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">点击“添加卡”</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#                    <b>#}
+{#                        （2）所有商品都提供的运输方式为“转运”，部分商品可提供“直邮”。两种运输方式的成本及所需时长不同，以商品页面展示为准，客户可自行选择。部分商品以转运方式运输可提供“邮费优惠”（详见活动页面标示）。<br/>#}
+{#                        （3）购买攻略：海淘教程、paypal教程、国际转运、关税及其他实用工具应有尽有。<br/>#}
+                        6.购买标注“苏宁海外购”的产品，需：<br/>
+                        </b>
+                         <table>
+						<tr>
+							<td class="panelHT">注册/登录苏宁海外购</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">进行实名认证</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">选择“易付宝”</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT"><b>选购商品</b></td>
+						</tr>
+						<tr>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="panelHT">选择广发信用卡支付</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">完成信息填写</td>
+						</tr>
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">收货晒单</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">购买下单</td>
+						</tr>
+					</table>
+	       <b>
+                        7.购买标注“网易考拉海购”的产品，需：
+                    </b>
+                       <table>
+						<tr>
+							<td class="panelHT">注册/登录网易考拉海购</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">选购商品</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">进行实名认证</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT"><b>选择“网易宝”</b></td>
+						</tr>
+						<tr>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="panelHT">选择广发信用卡支付</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">完成信息填写</td>
+						</tr>
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">收货晒单</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">购买下单</td>
+						</tr>
+					</table>
+                        <b> 8.购买标注"海豚村＂的产品，需：
+                    </b>
+                     <table>
+						<tr>
+							<td class="panelHT">注册海豚村用户</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">选购商品</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+						</tr>
+						<tr>
+							<td class="panelHT">支付选择＂银联在线支付＂并输入广发信用卡卡号</td>
+							<td class="center"><img class="toRight"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT"><b>购买下单</b></td>
+						</tr>
+						<tr>
+							<td class="center"><img class="toBottom"  src="http://cdn.ethan.com/gfanniversary/static/img/su_jian.png" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="panelHT">验证身份证</td>
+							<td class="center"><img class="toLeft"  src="http://cdn.ethan.com/gfanniversary/static/img/heng_jian.png" /></td>
+							<td class="panelHT">收货晒单</td>
+						</tr>
+					</table>
+                         <b>
+                        9.部分参与商户或活动产品可能进行调整，实际参与商户和产品以官网或活动页面实时公布内容为准。<br/>
+                        10.活动产品不予退还、恕不开具发票。<br/>
+                        11.已取消、退货、拒绝签收的订单不作优惠返还，如退货前已返还，退货后将扣回相应金额。<br/>
+                        12.优惠返还时，参与活动的卡片注销或失效，将视为主动放弃。<br/>
+                        13.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任。
+                    </b>
+                    <!-- <span style="display:inline-block !important;width: 10px;height: 10px;border-radius: 10px;background-color: #c71029;margin-right: 8px"></span>接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！ -->
+
+				</div>
+				<div id="linkJFAlert"  >
+					<h1>积分半价</h1>
+					<s>活动内容：客户至活动指定商户门店刷广发信用卡积分，<em>享半价</em>积分购买活动产品。客户名下多张信用卡积分不可合并支付。</s>
+					<i>参与对象：名下持有普通积分信用卡的客户，仅持有航空卡、淘宝卡、携程卡、聪明卡、希望卡、附属卡、异形卡、商务卡、公司卡、转账卡、万应卡、东风日产卡的客户暂无法参与。</i>
+					<b>优惠内容：<br />
+						1.以下指定品牌指定门店刷积分购物享半价,<em>每月</em>最高返12,000<em>广发</em>积分。<br/>
+						参与品牌：COSTA、哈根达斯、GODIVA、必胜客、汉堡王、肯德基、赛百味、全家、喜市多、Ok便利店、华润万家、圣安娜、万宁<br />
+						2.以下指定品牌指定门店刷积分购物享半价,<em>每月</em>最高返6,000<em>广发</em>积分。<br/>
+						参与品牌：湛江-燊麦、茂名-嘉豪轩、茂名-粮丰园、肇庆-心悦、珠海-味蕾、中山-新天地、阳江-名座、佛山-无忧岛、沈阳-好利来、武汉-快乐柠檬、VANGO、汕头-欧香<br />
+						3.奖励：<em>满足奖励条件后2个月内</em>返还一半<em>广发</em>积分至客户消费的卡片中。
+					</b>
+					<br />
+					<b>注意事项:<br />
+						1.每月限量22000名，先到先得，每人每自然月限享一次返半积分优惠。<br />
+						2.积分POS购物半价优惠活动与店内优惠活动同享。积分兑换的商品不予退还、恕不开具发票。<br />
+						3.活动期间会有部分参与商户进行调整，实际参与商户以官网实时公布内容的为准。<br />
+                        4.优惠返还时，参与活动的卡片注销或失效，将视为主动放弃。<br />
+                        5.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任。
+					</b><br/>
+{#                    <h4 style="color:#D31F4C;text-align: center">万宁加码礼</h4><br/>#}
+{#                    <b>活动时间：2015年12月26日至2016年1月31日</b><br/>#}
+{#                    <b>活动内容：客户至指定万宁门店刷广发信用卡积分，原24,000积分，现半价积分即12,000积分兑换40元万宁抵用券！</b><br/>#}
+{#                    <b>活动对象：名下持有普通积分信用卡的主卡客户，航空卡、淘宝卡、携程卡、聪明卡、希望卡、异形卡、商务卡、公司卡、转账卡、万应卡、东风日产卡暂不参与。</b><br/>#}
+{#                    <b>参与活动流程：</b>#}
+{#					<table>#}
+{#						<tr>#}
+{#							<td class="panelHT">活动期间，至万宁活动指定门店刷广发信用卡积分兑换抵用券</td>#}
+{#							<td class="center"><img class="toLeft"  src="{% static "img/heng_jian.png" %}" /></td>#}
+{#							<td class="panelHT">至收银台结账时，用广发信用卡支付并出示抵用券</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#                    <b>注意事项:<br />#}
+{#						1.活动期间限量25000份，先到先得，兑完即止！每日每卡限享一次半价积分优惠。<br />#}
+{#                        2.加码活动与其他积分POS购物半价优惠活动共享优惠。客户名下多张信用卡积分不可合并支付。<br />#}
+{#                        3.抵用券不可兑换现金，不设找赎。抵用券仅可活动门店内使用，仅限兑换当日使用。<br />#}
+{#                        ４.实际参与门店以官网实时公布内容的为准。<br />#}
+{#                        ５.广发银行非本次活动的商品或服务提供商，如发生与商品或服务有关争议，请客户与商家协商解决，广发银行不就商品或服务争议或纠纷承担任何责任。#}
+{#					</b>#}
+{#					<a href="/rules">活动细则</a>#}
+{#                    <span style="display:inline-block !important;width: 10px;height: 10px;border-radius: 10px;background-color: #c71029;margin-right: 8px"></span>接商户通知：受春节假期的影响，物流周期会有所延长，具体情况请咨询对应商户，感谢您的谅解！#}
+
+				</div>
+			</div>
+
+		</div>
+
+        <div style="display:none" >
+            <script src="http://s4.cnzz.com/z_stat.php?id=1256751266&web_id=1256751266" language="JavaScript"></script>
+        </div>
+    </body>
+<script>
+		$(function(){
+		$(".alert>img").click(function() {
+			$(this).parent().hide().parent().hide();
+		});
+	});
+</script>
+
+
+</html>

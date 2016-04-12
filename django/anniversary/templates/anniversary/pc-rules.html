@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="" name="keywords">
+<meta content="" name="description">
+<link rel="stylesheet" href="{% static "css/pc_global.css" %}" />
+<link rel="stylesheet" href="{% static "css/pc_index.css" %}" />
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+{#     <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}"></script>#}
+     <script type="text/javascript" src="{% static "js/param.js" %}"></script>
+    <script>
+        $(function () {
+            //控制要显示哪个活动细则
+            var rulesID=$.request.queryString["type"];
+            $("#"+rulesID).show();
+            if(rulesID=="linkHTAlert"){
+                $("#overlayer").show();
+            }
+        });
+    </script>
+<title>活动细则</title>
+
+</head>
+
+<body>
+
+<div id="main" style="position: relative">
+	<!--begin of top -->
+	<div class="top">
+		<img src="{% static "img/20zhounian.jpg" %}" alt="广发卡商城">
+
+	</div>
+	<!--end of top -->
+    <img class="hide" id="linkSCAlert" style="width: 990px;height: auto" src="{% static "img/pc_rules_sc.jpg" %}"/>
+    <img class="hide" id="linkHTAlert" style="width: 990px;height: auto" src="{% static "img/pc_rules_ht.jpg" %}"/>
+    <img class="hide" id="linkJFAlert" style="width: 990px;height: auto" src="{% static "img/pc_rules_jf.jpg" %}"/>
+{#    <a id="overlayer"  target="_blank" href="https://www.paypal.com/c2/signup/account?country.x=C2&locale.x=zh_C2&&mpch=ads&intl_cid=27736-214897-12439-74&spid=510503087868697758"#}
+{#       style="border:1px solid red;position: absolute;top: 1120px;width: 100px;display:none;height: 50px;right:60px;background:#fff; opacity:0;filter:alpha(opacity=0);"></a>#}
+
+</div>
+ <div style="display:none" >
+            <script src="http://s4.cnzz.com/z_stat.php?id=1256751266&web_id=1256751266" language="JavaScript"></script>
+        </div>
+<script>
+	$(document).ready(function(){
+		$('#shopBtn').click(changeNav);
+		$('#haitaoBtn').click(changeNav);
+		$('#integralBtn').click(changeNav);
+	});
+	function changeNav(){
+		var conArray = ['shop','haitao','integral']
+		var className = $(this).attr('class');
+		var con = $(this).attr('con');
+		if(className != 'actived'){
+			$(this).attr('class','actived');
+			$('#'+con).show();
+			for(var i=0;i<conArray.length;i++){
+				if(conArray[i] == con){
+					conArray.splice(i,1);
+					break;
+				}
+			}
+
+			for(var n=0;n<conArray.length;n++){
+				$('#'+conArray[n]).hide();
+				$('#'+conArray[n]+'Btn').attr('class','');
+			}
+		}
+	}
+</script>
+
+</body>
+</html>
