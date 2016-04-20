@@ -35,8 +35,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	//'model_config_path' => config_path('administrator'),
-	'model_config_path' => app('path') . '/config/administrator',
+	'model_config_path' => config_path('administrator'),
 
 	/**
 	 * The path to your settings config directory
@@ -66,7 +65,7 @@ return array(
 	 * 		'Analytics' => array('E-Commerce' => 'page.ecommerce.analytics'),
 	 *	)
 	 */
-	'menu' => array(),
+	'menu' => ['item'],
 
 	/**
 	 * The permission option is the highest-level authentication check that lets you define a closure that should return true if the current user
@@ -76,7 +75,8 @@ return array(
 	 */
 	'permission'=> function()
 	{
-		return Auth::check();
+		//return Auth::check();
+        return true;
 	},
 
 	/**
@@ -99,7 +99,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'home_page' => '',
+	'home_page' => 'item',
 
 	/**
 	 * The route to which the user will be taken when they click the "back to site" button

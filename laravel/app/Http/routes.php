@@ -12,10 +12,8 @@
 */
 
 Route::get('/', function () {
-    //return view('welcome');
-    
-    $img = Image::make('img/1.png')->resize(300, 300);
-    return $img->response();
+    $img = Image::make('img/1.png')->resize(300, 200);
+    return $img->response('png');
 });
 
 //Route::get('/pc', function () {

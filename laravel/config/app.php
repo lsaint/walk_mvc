@@ -159,7 +159,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Tremby\DbShellCommand\ServiceProvider::class,
         'Illuminate\Html\HtmlServiceProvider',
-
+        'Frozennode\Administrator\AdministratorServiceProvider',
     ],
 
     /*

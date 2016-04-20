@@ -4,9 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ff449f684cf9bdcf1a3d8bd49d4f5ddf",
-    "content-hash": "eb9ec78bddb1fa14e443e244e2d0bcba",
+    "hash": "e40c2b4512ff614b52accbc6442a72c1",
+    "content-hash": "0dc16ba55617bd08e1aa7bdd29e1fd1e",
     "packages": [
+        {
+            "name": "ckeditor/ckeditor",
+            "version": "4.5.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckeditor/ckeditor-releases.git",
+                "reference": "6345bc8f142bb72ffb83b4a964be4d88ad3905c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/ckeditor/ckeditor-releases/6345bc8f142bb72ffb83b4a964be4d88ad3905c8.zip",
+                "reference": "6345bc8f142bb72ffb83b4a964be4d88ad3905c8",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource",
+                    "homepage": "http://cksource.com"
+                }
+            ],
+            "description": "JavaScript WYSIWYG web text editor.",
+            "homepage": "http://ckeditor.com",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "fckeditor",
+                "html",
+                "javascript",
+                "richtext",
+                "text",
+                "wysiwyg"
+            ],
+            "time": "2016-03-31 16:23:17"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",
@@ -230,6 +271,59 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "frozennode/administrator",
+            "version": "v5.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FrozenNode/Laravel-Administrator.git",
+                "reference": "b5b59c41c37f8879ce033fd4744c183484c5ac1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/FrozenNode/Laravel-Administrator/b5b59c41c37f8879ce033fd4744c183484c5ac1e.zip",
+                "reference": "b5b59c41c37f8879ce033fd4744c183484c5ac1e",
+                "shasum": ""
+            },
+            "require": {
+                "ckeditor/ckeditor": "4.*",
+                "laravel/framework": "5.*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/controllers"
+                ],
+                "psr-0": {
+                    "Frozennode\\Administrator": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Hartigan",
+                    "email": "jan@frozennode.com"
+                }
+            ],
+            "description": "A database interface package for Laravel",
+            "homepage": "http://administrator.frozennode.com",
+            "keywords": [
+                "admin",
+                "administrator",
+                "cms",
+                "database",
+                "laravel",
+                "laravel-administrator"
+            ],
+            "time": "2015-12-26 22:22:06"
         },
         {
             "name": "guzzlehttp/guzzle",
